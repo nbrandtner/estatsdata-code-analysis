@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    container_name: proj2223_estatsaustria_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: banjodevs
+      MYSQL_PASSWORD: banjodevs
+      MYSQL_DATABASE: estatsdb
+      TZ: Europe/Vienna
+    ports:
+      - "14306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./sql/estatsdump.sql:/docker-entrypoint-initdb.d/estatsdump.sql
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: proj2223_estatsaustria_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      TZ: Europe/Vienna
+    ports:
+      - "14080:80"
+    depends_on:
+      - mysql
+
+  generator:
+    image: nbrandtner/datagenerator:latest
+    container_name: proj2223_estatsaustria_datagenerator
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      TZ: Europe/Vienna
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+
+  ki:
+    image: rocker/r-ver:4.1.1
+    container_name: proj2223_estatsaustria_R
+    restart: always
+    environment:
+      TZ: Europe/Vienna
+    depends_on:
+      - mysql
+    volumes:
+      - ./otherParts/ubl/:/var/lib/ubl
+      - ./otherParts/ubl/start.sh:/docker-entrypoint-initdb.d/start.sh
+
+  php-apache-environment:
+    container_name: proj2223_estatsaustria_php-apache
+    image: php:8.0-apache
+    restart: always
+    environment:
+      TZ: Europe/Vienna
+    ports:
+      - "8000:90"
+    volumes:
+      - ./otherParts/schwarzmann/src/:/var/www/html/
+
+networks:
+  default:
+    name: proj2223_estatsaustria_net
