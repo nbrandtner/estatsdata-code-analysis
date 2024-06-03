@@ -3,51 +3,50 @@ package org.example;
 import java.text.SimpleDateFormat;
 
 public class Generatornew {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static String state="";
 
     public static Double[] genData(int n){
         // int n wird der generate methode sagen, was sie generieren soll
-        // Alle Kategorien brauchen zufaellig erzeugte Testdaten
+        // alle Kategorien brauchen zufaellig erzeugte Testdaten
         double multiplier=1.0;
         // Jedes Bundesland bekommt einen Faktor mit dem die Daten multipliziert werden um akurate testdaten zu simulieren
-        switch(n) {
-            case 0:
-                multiplier = 1.0;	//burgenland
-                state="Burgenland";
-                break;
-            case 1:
-                multiplier = 2.4; 	//kaernten
-                state="Kaernten";
-                break;
-            case 2:
-                multiplier = 5.0;	//niederoesterreich
-                state="Niederoesterreich";
-                break;
-            case 3:
-                multiplier = 6.2;	//oberoesterreich
-                state="Oberoesterreich";
-                break;
-            case 4:
-                multiplier = 1.6;	//salzburg
-                state="Salzburg";
-                break;
-            case 5:
-                multiplier = 4.4;	//steiermark
-                state="Steiermark";
-                break;
-            case 6:
-                multiplier = 2.1;	//tirol
-                state="Tirol";
-                break;
-            case 7:
-                multiplier = 1.3;	//vorarlberg
-                state="Vorarlberg";
-                break;
-            case 8:
-                multiplier = 4.2;	//wien
-                state="Wien";
-                break;
+        switch (n) {
+            case 0 -> {
+                multiplier = 1.0;    //burgenland
+                state = "Burgenland";
+            }
+            case 1 -> {
+                multiplier = 2.4;    //kaernten
+                state = "Kaernten";
+            }
+            case 2 -> {
+                multiplier = 5.0;    //niederoesterreich
+                state = "Niederoesterreich";
+            }
+            case 3 -> {
+                multiplier = 6.2;    //oberoesterreich
+                state = "Oberoesterreich";
+            }
+            case 4 -> {
+                multiplier = 1.6;    //salzburg
+                state = "Salzburg";
+            }
+            case 5 -> {
+                multiplier = 4.4;    //steiermark
+                state = "Steiermark";
+            }
+            case 6 -> {
+                multiplier = 2.1;    //tirol
+                state = "Tirol";
+            }
+            case 7 -> {
+                multiplier = 1.3;    //vorarlberg
+                state = "Vorarlberg";
+            }
+            case 8 -> {
+                multiplier = 4.2;    //wien
+                state = "Wien";
+            }
         }
 
         // stromverbrauch,strompreis,CO2Emissionen,Stromimport,Stromexport
@@ -88,9 +87,5 @@ public class Generatornew {
 
         Double[] data = {stromverbrauch, (double) strompreis, emission, stromimport, stromexport, (double) n};
         return data;
-    }
-    public static String generateSum(){
-
-        return "";
     }
 }

@@ -69,4 +69,5 @@ services:
 
 networks:
   default:
+    # noinspection ComposeUnknownKeys
     name: proj2223_estatsaustria_net
